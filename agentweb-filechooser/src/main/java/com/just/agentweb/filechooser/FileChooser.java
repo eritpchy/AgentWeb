@@ -18,6 +18,7 @@ package com.just.agentweb.filechooser;
 
 import android.app.Activity;
 import android.content.ClipData;
+import android.content.ContentResolver;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -29,6 +30,7 @@ import android.os.SystemClock;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
 import android.util.Base64;
+import android.util.Log;
 import android.webkit.ValueCallback;
 import android.webkit.WebChromeClient;
 import android.webkit.WebView;
@@ -49,6 +51,8 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
 import java.lang.ref.WeakReference;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -562,6 +566,23 @@ public class FileChooser {
             return;
         }
         if (!isCamera) {
+            if (Build.VERSION.SDK_INT >= 30) {
+                // Android 11 不知道为什么不能支持显示图片
+                // 解决方案：复制文件到应用程序存储
+                if (datas != null && datas.length > 0) {
+                    Uri data = datas[0];
+                    try {
+                        ContentResolver contentResolver = mActivity.getContentResolver();
+                        InputStream inputStream = contentResolver.openInputStream(data);
+                        String nice = mActivity.getExternalCacheDir().getAbsolutePath() +"/"+System.currentTimeMillis()+  ".jpg";
+                        Files.copy(inputStream, Paths.get(nice));
+                        mUriValueCallbacks.onReceiveValue(new Uri[]{Uri.fromFile(new File(nice))});
+                        return;
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
             mUriValueCallbacks.onReceiveValue(datas == null ? new Uri[]{} : datas);
             return;
         }
