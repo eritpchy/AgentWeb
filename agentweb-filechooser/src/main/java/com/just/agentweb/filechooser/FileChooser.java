@@ -174,6 +174,12 @@ public class FileChooser {
     }
 
     private void fileChooser() {
+        if (mPermissionInterceptor != null) {
+            if (mPermissionInterceptor.intercept(FileChooser.this.mWebView.getUrl(), AgentWebPermissions.STORAGE, AgentWebPermissions.ACTION_STORAGE)) {
+                cancel();
+                return;
+            }
+        }
 
         List<String> permission = null;
         if (AgentWebUtils.getDeniedPermissions(mActivity, AgentWebPermissions.STORAGE).isEmpty()) {
@@ -320,11 +326,10 @@ public class FileChooser {
         }
 
         if (mPermissionInterceptor != null) {
-            if (mPermissionInterceptor.intercept(FileChooser.this.mWebView.getUrl(), AgentWebPermissions.CAMERA, "camera")) {
+            if (mPermissionInterceptor.intercept(FileChooser.this.mWebView.getUrl(), AgentWebPermissions.CAMERA, AgentWebPermissions.ACTION_CAMERA)) {
                 cancel();
                 return;
             }
-
         }
 
         Action mAction = new Action();
