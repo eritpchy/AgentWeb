@@ -844,7 +844,7 @@ public class AgentWebUtils {
 	                                     Handler.Callback jsChannelCallback
 	) {
 		try {
-			Class<?> clz = Class.forName("com.just.agentweb.filechooser.FileChooser");
+			Class<?> clz = Class.forName("com.just.agentwebX5.filechooser.FileChooser");
 			Object mFileChooser$Builder = clz.getDeclaredMethod("newBuilder",
 					Activity.class, WebView.class)
 					.invoke(null, activity, webView);
