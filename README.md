@@ -23,16 +23,16 @@ allprojects {
 * Support
 
    ```groovy
-	implementation 'com.github.Justson.AgentWeb:agentweb-core:v5.0.0-alpha' // (必选)
-	implementation 'com.github.Justson.AgentWeb:agentweb-filechooser:v5.0.0-alpha' // (可选)
+	implementation 'net.xdow:agentweb-core:v5.0.1-x5' // (必选)
+	implementation 'net.xdow:agentweb-filechooser:v5.0.1-x5' // (可选)
 	implementation 'com.github.Justson:Downloader:v5.0.0' // (可选)
 	```
 	
 * Androidx
 
    ```groovy
-    implementation 'com.github.Justson.AgentWeb:agentweb-core:v5.0.0-alpha.1-androidx' // (必选)
-    implementation 'com.github.Justson.AgentWeb:agentweb-filechooser:v5.0.0-alpha.1-androidx' // (可选)
+    implementation 'com.github.Justson.AgentWeb:agentweb-core:v5.0.1-alpha.1-androidx' // (必选)
+    implementation 'com.github.Justson.AgentWeb:agentweb-filechooser:v5.0.1-alpha.1-androidx' // (可选)
     implementation 'com.github.Justson:Downloader:v5.0.0-androidx' // (可选)
    
    ```

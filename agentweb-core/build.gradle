@@ -1,6 +1,10 @@
 apply plugin: 'com.android.library'
 apply plugin: 'maven-publish'
 
+group 'net.xdow'
+version '5.0.1-x5'
+description 'AgentWeb is a powerful library based on Android WebView.'
+
 android {
     compileSdkVersion COMPILE_SDK_VERSION.toInteger()
     buildToolsVersion "${BUILD_TOOL_VERSION}"
@@ -9,7 +13,7 @@ android {
         minSdkVersion 14
         targetSdkVersion TARGET_SDK_VERSION.toInteger()
         versionCode 3
-        versionName "5.0.0"
+        versionName "5.0.1"
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
@@ -43,3 +47,4 @@ dependencies {
     compileOnly fileTree(include: ['*.jar'], dir: 'providedLibs')
     compileOnly 'com.tencent.tbs:tbssdk:44286'
 }
+apply from: rootProject.file('gradle/maven-center-publish-android.gradle')

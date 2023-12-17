@@ -55,4 +55,5 @@ sample/sampledata/
 node_modules
 package-lock.json
 package.json
+/ext/secring.gpg
 

@@ -4,6 +4,7 @@ buildscript {
     repositories {
         jcenter()
         google()
+        mavenCentral()
         maven { url "https://jitpack.io" }
         maven {
             url 'https://maven.google.com/'
@@ -12,7 +13,6 @@ buildscript {
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:3.4.0'
-        classpath 'com.novoda:bintray-release:0.9'
 //        implementation 'com.github.jitpack:gradle-simple:1.0'
     }
 }
@@ -21,6 +21,7 @@ allprojects {
     repositories {
         jcenter()
         google()
+        mavenCentral()
         maven { url "https://jitpack.io" }
         maven {
             url 'https://maven.google.com/'
@@ -39,3 +40,16 @@ task clean(type: Delete) {
 //tasks.getByPath(":agentweb-core:mavenAndroidJavadocs").enabled = false
 //tasks.getByPath(":agentweb-download:mavenAndroidJavadocs").enabled = false
 //tasks.getByPath(":agentweb-filechooser:mavenAndroidJavadocs").enabled = false
+
+File secretPropsFile = project.rootProject.file('local.properties')
+if (secretPropsFile.exists()) {
+    println "Found secret props file, loading props"
+    Properties p = new Properties()
+    p.load(new FileInputStream(secretPropsFile))
+    p.each { name, value ->
+        if (value.startsWith('./')) {
+            value = file(value).getAbsolutePath()
+        }
+        ext[name] = value
+    }
+}
