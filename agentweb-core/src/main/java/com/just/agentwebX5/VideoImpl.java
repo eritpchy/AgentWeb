@@ -46,6 +46,7 @@ public class VideoImpl implements IVideo, EventInterceptor {
     private View mMoiveView = null;
     private ViewGroup mMoiveParentView = null;
     private IX5WebChromeClient.CustomViewCallback mCallback;
+    private int mLastRequestedOrientation = ActivityInfo.SCREEN_ORIENTATION_SENSOR;
 
     public VideoImpl(Activity mActivity, WebView webView) {
         this.mActivity = mActivity;
@@ -59,6 +60,7 @@ public class VideoImpl implements IVideo, EventInterceptor {
         if ((mActivity = this.mActivity) == null || mActivity.isFinishing()) {
             return;
         }
+        mLastRequestedOrientation = mActivity.getRequestedOrientation();
         mActivity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
         Window mWindow = mActivity.getWindow();
         Pair<Integer, Integer> mPair = null;
@@ -96,8 +98,8 @@ public class VideoImpl implements IVideo, EventInterceptor {
         if (mMoiveView == null) {
             return;
         }
-        if (mActivity != null && mActivity.getRequestedOrientation() != ActivityInfo.SCREEN_ORIENTATION_PORTRAIT) {
-            mActivity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        if (mActivity != null) {
+            mActivity.setRequestedOrientation(mLastRequestedOrientation);
         }
         if (!mFlags.isEmpty()) {
             for (Pair<Integer, Integer> mPair : mFlags) {
